@@ -18,7 +18,9 @@ class PSPPredict(RemoteKernelsBase):
         -------
         list[RemoteKernel]
         """
-        page = urlopen('https://spdf.gsfc.nasa.gov/pub/data/psp/ephemeris/spice/Long_Term_Predicted_Ephemeris/')
+        page_link = "https://spdf.gsfc.nasa.gov/pub/data/psp/ephemeris/spice/ephemerides"
+        print(page_link)
+        page = urlopen(f'{page_link}/')
         soup = BeautifulSoup(page, 'html.parser')
 
         kernel_urls = []
@@ -29,7 +31,7 @@ class PSPPredict(RemoteKernelsBase):
                 matches = self.matches(fname)
                 if matches:
                     kernel_urls.append(
-                        RemoteKernel(f'https://spdf.gsfc.nasa.gov/pub/data/psp/ephemeris/spice/Long_Term_Predicted_Ephemeris/{href}', *matches[1:]))
+                        RemoteKernel(f'{page_link}/{href}', *matches[1:]))
 
         return kernel_urls
 
